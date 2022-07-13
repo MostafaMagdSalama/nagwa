@@ -39,7 +39,6 @@ Regarding the server side I used Node.js to create and api's.
 
 * [React.js](https://ar.reactjs.org)
 * [Node.js](https://nodejs.org/en)
-* [MongoDB](https://www.mongodb.com)
 * [TypeScript](https://www.typescriptlang.org/)
 * [Material ui](https://mui.com)
 
