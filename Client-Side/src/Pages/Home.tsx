@@ -27,7 +27,6 @@ const Home = () => {
   useEffect(() => {
     Axios.get("http://localhost:4000/words")
       .then((data) => {
-        console.log(data.data);
         setQuestions(data.data);
       })
       .catch((err) => {
@@ -153,7 +152,6 @@ const Home = () => {
     setAnswer("");
   };
 
-console.log(WordsCounter)
 
 
   return (

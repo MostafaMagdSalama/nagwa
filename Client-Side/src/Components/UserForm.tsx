@@ -22,13 +22,11 @@ const UserForm = () => {
     event.preventDefault();
     if (userNameIsValid) {
       localStorage.setItem("username", JSON.stringify(formik.values.userName));
-      console.log("valid");
       startTest();
     }
   };
 
   const startTest = () => {
-    console.log("navigating...");
     localStorage.setItem("status", "inProgress");
     Navigate("/test");
   };

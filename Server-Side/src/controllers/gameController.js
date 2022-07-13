@@ -49,7 +49,6 @@ const getRank = async (req, res, next) => {
   scoresList.sort((x, y) => x - y);
   scoresList.find((Element, index) => {
     if (Element >= score) {
-      console.log("result is = ", result);
       return result=(100 * index + 1) / 30
     }
     result = Element;
