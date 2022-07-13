@@ -26,6 +26,11 @@ const UserForm = () => {
     }
   };
 
+  const onKeyPressEnterHandler=(e:React.KeyboardEvent<HTMLElement>)=>{
+    if (e.key === 'Enter') {
+      SubmitHandler(e)
+    }
+  }
   const startTest = () => {
     localStorage.setItem("status", "inProgress");
     Navigate("/test");
@@ -89,6 +94,7 @@ const UserForm = () => {
       >
         <TextField
           required
+          onKeyPress={onKeyPressEnterHandler}
           id="userName"
           label="Name"
           name="userName"

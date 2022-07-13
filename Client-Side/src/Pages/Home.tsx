@@ -2,27 +2,25 @@
 import { Button, Grid, Stack, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
-
 // importing react built in or other functions  to implement.
-import { useEffect, useState , useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 // importing my components to be used.
 import WordContainer from "../Components/WordContainer";
 import SpecialButton from "../Components/UI/SpecialButton";
-import ProgressBar from '../Components/UI/ProgressBar';
-
+import ProgressBar from "../Components/UI/ProgressBar";
 
 // importing interfaces to be used.
 import { WordInterface } from "../Types/words";
 
 //importing toast component
-import { toast } from 'react-toastify';
+import { toastSuccess , toastWarn } from "../Utils/HelperFunctions";
+
 import GradientText from "../Components/UI/GradientText";
 
 const Home = () => {
-
   // fetching Questions from the server
   useEffect(() => {
     Axios.get("http://localhost:4000/words")
@@ -35,7 +33,7 @@ const Home = () => {
   }, []);
 
   // setting the useName state
-  const [userName , setUserName] = useState('') 
+  const [userName, setUserName] = useState("");
 
   // isChecked for checking if the user checked his answer or not.
   const [isChecked, setIsChecked] = useState(false);
@@ -49,8 +47,8 @@ const Home = () => {
   // word counter used for indexing and showing the upcoming word.
   const [WordsCounter, setWordsCounter] = useState(0);
 
-  // percentage state. 
-  const [percent , setPercent] = useState(0)
+  // percentage state.
+  const [percent, setPercent] = useState(0);
 
   // used for showing the chosen answer.
   const [Answer, setAnswer] = useState("");
@@ -59,10 +57,10 @@ const Home = () => {
   const [bgColor, SetbgColor] = useState(true);
 
   // used for preventing answering the question twice.
-  const [Answered , setIsAnswered] = useState(false)
- 
+  const [Answered, setIsAnswered] = useState(false);
+
   // Hide sound feature state.
-  const [HideSound , setHideSound] = useState(false)
+  const [HideSound, setHideSound] = useState(false);
 
   // answers buttons data
   const Chocies = [
@@ -81,30 +79,30 @@ const Home = () => {
     setAnswer(ans);
   };
 
- 
   useEffect(() => {
     // reset the error message and other state every question.
     setIsChecked(false);
     setErrorMessage("");
-    
-    // getting the user name 
-    const username = localStorage.getItem('username') ? JSON.parse(localStorage.getItem('username') || '' ) : ''
-    setUserName(username)
+
+    // getting the user name
+    const username = localStorage.getItem("username")
+      ? JSON.parse(localStorage.getItem("username") || "")
+      : "";
+    setUserName(username);
   }, [WordsCounter]);
 
   const CheckAnswerHandler = () => {
-
-    if( Answered ) {
-      setErrorMessage('You can\'t Answer the question twice ')
-      return
+    if (Answered) {
+      setErrorMessage("You can't Answer the question twice ");
+      return;
     }
-   
+
     if (Answer === "" && WordsCounter !== 10) {
       setErrorMessage("You should choose an answer");
     }
 
     if (Answer === questions[WordsCounter].pos) {
-     (function() {toast.success("Right Answer")})() 
+      toastSuccess("Right Answer");
       setScore((previousState) => (previousState += 10));
       SetbgColor(false);
       setIsChecked(true);
@@ -112,27 +110,24 @@ const Home = () => {
     }
 
     if (Answer !== questions[WordsCounter].pos && Answer !== "") {
-      (function() {toast.warn("Wrong Answer")})() 
+      toastWarn("Wrong Answer");
       SetbgColor(false);
       setIsChecked(true);
-      setIsAnswered(true)
+      setIsAnswered(true);
     }
   };
 
-  
-
-  useCallback( () => {
-    ChangePercentHandler()
-    getNextQuestion()
-  } , [WordsCounter])
-
+  useCallback(() => {
+    ChangePercentHandler();
+    getNextQuestion();
+  }, [WordsCounter]);
 
   const ChangePercentHandler = () => {
     // here I'm calculating the percentage by dividing the total number of questions over the answered questions.
-    const TotalNumberOFQuestions = questions.length  ;
-    setPercent( Math.round(((WordsCounter +1) / TotalNumberOFQuestions ) *100) )
-    return  percent
-  }
+    const TotalNumberOFQuestions = questions.length;
+    setPercent(Math.round(((WordsCounter + 1) / TotalNumberOFQuestions) * 100));
+    return percent;
+  };
 
   const getResult = () => {
     // storing the result in localStorage to be used in result page.
@@ -144,28 +139,35 @@ const Home = () => {
 
   const getNextQuestion = () => {
     // getting the upcoming questions by changing the counter.
-    if(WordsCounter === 9) {setHideSound(true)}
+    if (WordsCounter === 9) {
+      setHideSound(true);
+    }
     SetbgColor(true);
     setWordsCounter((counter) => (counter += 1));
-    setIsAnswered(false)
-    ChangePercentHandler()
+    setIsAnswered(false);
+    ChangePercentHandler();
     setAnswer("");
   };
 
-
-
   return (
-    <Box sx={{
-       padding:{xl:'2rem' , lg: '2rem' , md:'2rem' , sm: '2rem' , xs: '2rem'} ,
-        color: "#263238" , minHeight:"100vh" }}>
-      <Stack justifyContent="space-around" alignItems="center" gap={5} sx={{height:"100%"}}>
-
+    <Box
+      sx={{
+        padding: { xl: "2rem", lg: "2rem", md: "2rem", sm: "2rem", xs: "2rem" },
+        color: "#263238",
+        minHeight: "100vh",
+      }}
+    >
+      <Stack
+        justifyContent="space-around"
+        alignItems="center"
+        gap={5}
+        sx={{ height: "100%" }}
+      >
         <ProgressBar percent={percent} />
 
-       { userName && <GradientText >Good Luck, {userName}</GradientText> }
+        {userName && <GradientText>Good Luck, {userName}</GradientText>}
 
-
-        <WordContainer bgc="#C9D8DF" hideSound={HideSound} >
+        <WordContainer bgc="#C9D8DF" hideSound={HideSound}>
           {questions[WordsCounter]
             ? questions[WordsCounter].word
             : "we're done"}
@@ -190,7 +192,7 @@ const Home = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      width: '100%',
+                      width: "100%",
                       backgroundColor:
                         Answer === choice.title && bgColor
                           ? "#9c27b0"
@@ -208,7 +210,6 @@ const Home = () => {
             })}
           </Grid>
         )}
-
 
         <Box>
           {" "}
@@ -236,7 +237,6 @@ const Home = () => {
               Show Rank
             </SpecialButton>
           )}
-
         </Stack>
 
         {ErrorMessage && (
