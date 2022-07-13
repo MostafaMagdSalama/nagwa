@@ -1,8 +1,7 @@
 import { Typography, Stack } from "@mui/material";
 import { Box } from "@mui/system";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import { toast } from "react-toastify";
-
+import {toastError} from "../Utils/HelperFunctions"
 const WordContainer = ({
   children,
   hideSound,
@@ -18,10 +17,8 @@ const WordContainer = ({
       speech.text = word;
       speech.lang = "en-US";
       window.speechSynthesis.speak(speech);
-    } else {
-      (function () {
-        toast.error("speech dosen't supported to your browser");
-      })();
+    } else { 
+      toastError("speech dosen't supported to your browser");
     }
   };
 

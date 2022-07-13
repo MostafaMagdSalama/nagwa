@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 // importing Axios for getting rank from the server
 import Axios from "axios";
 
+// import react-toastify to make toast 
+import { toastError } from '../Utils/HelperFunctions';
+
 // importing my ui components
 import GradientText from "../Components/UI/GradientText";
 import SpecialButton from "../Components/UI/SpecialButton";
@@ -29,7 +32,7 @@ const Result = () => {
         setUserScore(response.data);
       })
       .catch((err) => {
-        console.log("error request");
+        toastError(err.message)
       });
   }, []);
 

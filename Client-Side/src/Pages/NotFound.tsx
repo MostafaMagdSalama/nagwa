@@ -6,14 +6,8 @@ import not_found from '../Assets/not_found.png';
 const NotFound = () => {
     return (
         <Stack sx={{
-            //  margin: "auto",
-        // maxWidth:"50%" ,
         width: "100%",
-        //  padding: "7rem" ,
-        // width:"100%",
-        // backgroundColor:"red",
         position:"relative",
-        
           height:"100vh"}}>
 
             <Box component="img" src={not_found} sx={{ maxHeight: "100%", maxWidth: "100%" , position:"absolute",
