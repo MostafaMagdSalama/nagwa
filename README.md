@@ -60,7 +60,7 @@ you will need to do the same steps to run backend app.
 
 1. Clone the repo
 ```sh
-git clone https://github.com/your_username_/Project-Name.git
+git clone https://github.com/mstgdy/nagwa.git
 ```
 2. Install NPM packages
 ```sh
